@@ -67,8 +67,8 @@
     <div class="row my-5 p-0 text-center">
         <div class="col-lg-6 p-1">
             <span class="h2 font-weight-bold" style="border-bottom: 3px solid #000">TASIKMALAYA</span><br>
-            <span class="h4"><i class="fa fa-map-marker"></i> Jl. Perjuangan, No. 23 Kota Tasikmalaya</span>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15831.15799846949!2d112.7180902!3d-7.2647806!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f9a9ccae04a5%3A0x96b2d758386da3df!2sAsmaraloka%20Coffee!5e0!3m2!1sid!2sid!4v1718557708675!5m2!1sid!2sid" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <span class="h4"><i class="fa fa-map-marker"></i> <span id="alamate"></span></span>
+            <iframe id="map" src="" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <div class="col-lg-6 text-center">
             <span class="h2 font-weight-bold" style="border-bottom: 3px solid #000">CONTACT US</span><br>
@@ -172,6 +172,20 @@
                         toastr.error(err);
                     }
                 })
+            }
+        });
+
+        $.ajax({
+            url : "{{url('/api/v1/getprofile')}}",
+            type: "GET",
+            success : function(res){
+                if(res["success"]){
+                    $("#alamate").html(res["data"][0]["address"]);
+                    $("#map").attr("src",res["data"][0]["map"]);
+                }
+            },
+            error : function(err){
+                console.log(err);
             }
         });
     </script>

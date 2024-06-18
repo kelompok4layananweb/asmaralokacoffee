@@ -33,10 +33,16 @@
 
     <div class="w-100 mt-5 pt-5" id="minuman">
         <span class="h3" style="border-bottom: 3px solid #000; color:#8B6843">MINUMAN</span><br>
+        <div class="row mt-3" id="minumanlist">
+
+        </div>
     </div>
 
     <div class="w-100 my-5 pt-5" id="makanan">
         <span class="h3" style="border-bottom: 3px solid #000; color:#8B6843">MAKANAN</span><br>
+        <div class="row mt-3" id="makananlist">
+
+        </div>
     </div>
 </div>
 @endsection
@@ -49,15 +55,56 @@
                 type: "GET",
                 success : function(res){
                     if(res["success"]){
-                        $("#produklist").empty()
+                        $("#produklist").empty();
+                        $("#minumanlist").empty();
                         for (let i = 0; i < res["data"].length; i++) {
                             if(res["data"][i]["category"]=="Produk"){
                                 $("#produklist").append('\
-                                    <div class="col-lg-4 px-5">\
+                                    <div class="col-lg-4 p-5">\
                                         <div class="card" style="width: 18rem;">\
                                             <img src="{{asset("/assets/img/product")}}/'+res["data"][i]["picture"]+'" class="card-img-top">\
                                             <div class="card-body">\
-                                                <span class="h3">'+res["data"][i]["name"]+'</span>\
+                                                <span class="h4">'+res["data"][i]["name"]+'</span>\
+                                            </div>\
+                                            <div class="card-footer bg-white border-0">\
+                                                <button class="btn p-3" onClick=\'addtocart("'+res["data"][i]["id"]+','+res["data"][i]["name"]+','+res["data"][i]["price"]+','+res["data"][i]["picture"]+'")\'>Buy</button>\
+                                                <span class="float-right h3">'+rupiah(res["data"][i]["price"])+'</span>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                ');
+                            }
+                        }
+
+                        $("#minumanlist").empty();
+                        for (let i = 0; i < res["data"].length; i++) {
+                            if(res["data"][i]["category"]=="Minuman"){
+                                $("#minumanlist").append('\
+                                    <div class="col-lg-4 p-5">\
+                                        <div class="card" style="width: 18rem;">\
+                                            <img src="{{asset("/assets/img/product")}}/'+res["data"][i]["picture"]+'" class="card-img-top">\
+                                            <div class="card-body">\
+                                                <span class="h4">'+res["data"][i]["name"]+'</span>\
+                                            </div>\
+                                            <div class="card-footer bg-white border-0">\
+                                                <button class="btn p-3" onClick=\'addtocart("'+res["data"][i]["id"]+','+res["data"][i]["name"]+','+res["data"][i]["price"]+','+res["data"][i]["picture"]+'")\'>Buy</button>\
+                                                <span class="float-right h3">'+rupiah(res["data"][i]["price"])+'</span>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                ');
+                            }
+                        }
+
+                        $("#makananlist").empty();
+                        for (let i = 0; i < res["data"].length; i++) {
+                            if(res["data"][i]["category"]=="Makanan"){
+                                $("#makananlist").append('\
+                                    <div class="col-lg-4 p-5">\
+                                        <div class="card" style="width: 18rem;">\
+                                            <img src="{{asset("/assets/img/product")}}/'+res["data"][i]["picture"]+'" class="card-img-top">\
+                                            <div class="card-body">\
+                                                <span class="h4">'+res["data"][i]["name"]+'</span>\
                                             </div>\
                                             <div class="card-footer bg-white border-0">\
                                                 <button class="btn p-3" onClick=\'addtocart("'+res["data"][i]["id"]+','+res["data"][i]["name"]+','+res["data"][i]["price"]+','+res["data"][i]["picture"]+'")\'>Buy</button>\

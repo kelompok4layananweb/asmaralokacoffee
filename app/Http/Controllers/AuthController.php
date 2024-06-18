@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -43,15 +44,21 @@ class AuthController extends Controller
         }
 
         //save to database
-        $customer = User::create([
-            'username'  => explode("@",$request->email)[0],
-            'email'     => $request->email,
-            'password'  => bcrypt($request->password),
-            'role'   => "customer"
-        ]);
 
-        //failed save to database
-        return redirect('/login');
+        try {
+            $customer = User::create([
+                'username'  => explode("@",$request->email)[0],
+                'email'     => $request->email,
+                'password'  => bcrypt($request->password),
+                'role'   => "customer"
+            ]);
+            return redirect('/login');
+        } catch (QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == 1062){
+                return redirect('/register')->withErrors(['email'=>'Email sudah Terdaftar']);
+            }
+        }
     }
 
     public function logout(Request $request)

@@ -97,9 +97,9 @@
                         <div class="col-xl-5 col-lg-5 col-md-5">
                             <div class="footer-copy-right f-right">
                                 <div class="footer-social">
-                                    <a href="#"><i class="fab fa-instagram text-white" style="font-size: 24pt !important;"></i></a>
-                                    <a href="#"><i class="fab fa-facebook-f text-white" style="font-size: 24pt !important;"></i></a>
-                                    <a href="#"><i class="fab fa-whatsapp text-white" style="font-size: 24pt !important;"></i></a>
+                                    <a href="#" id="ig" target="_blank"><i class="fab fa-instagram text-white" style="font-size: 24pt !important;"></i></a>
+                                    <a href="#" id="fb" target="_blank"><i class="fab fa-facebook-f text-white" style="font-size: 24pt !important;"></i></a>
+                                    <a href="#" id="wa" target="_blank"><i class="fab fa-whatsapp text-white" style="font-size: 24pt !important;"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                         <button class="genric-btn danger small btn-block" id="emptycart">Kosongkan Keranjang</button>
                     </div>
                     <div class="row mt-3" id="checkoutprod">
-                        {{-- @if (Auth::check()) --}}
+                        @if (Auth::check())
                         <div class="col-12 p-0 m-0 text-center">
                                 <span>Cutomer Detail</span>
                                 <form action="#" id="formco">
@@ -160,9 +160,9 @@
                                     </div>
                                 </form>
                           </div>
-                        {{-- @else
+                        @else
                         <div class="col-12 p-0 m-0 text-center"><a href="{{URL::to('/login')}}" class="btn p-3">Login</a></div>
-                        @endif --}}
+                        @endif
                     </div>
                 </div>
               </div>
@@ -223,8 +223,6 @@
         <script src="{{asset('assets/js/plugins.js')}}"></script>
         <script src="{{asset('assets/js/main.js')}}"></script>
         <script>
-
-
             const rupiah = (number)=>{
                 return new Intl.NumberFormat("id-ID", {
                 style: "currency",
@@ -350,6 +348,21 @@
                 });
                 $("#emptycart").trigger('click');
                 $("#paymentmodal").modal("hide");
+            });
+
+            $.ajax({
+                url : "{{url('/api/v1/getprofile')}}",
+                type: "GET",
+                success : function(res){
+                    if(res["success"]){
+                        $("#ig").attr("href",res["data"][0]["ig"]);
+                        $("#fb").attr("href",res["data"][0]["fb"]);
+                        $("#wa").attr("href","https://api.whatsapp.com/send?phone="+res["data"][0]["wa"]);
+                    }
+                },
+                error : function(err){
+                    console.log(err);
+                }
             });
         </script>
         @yield('js')
