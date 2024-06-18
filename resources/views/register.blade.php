@@ -25,17 +25,28 @@
                 <div class="text-center mb-5"><span class="h2 font-weight-bold" style="color:#8B6843;">My Account</span></div>
 
                 <span class="h4 font-weight-bold">Register</span>
-                <form action="#" id="form-register">
+                @if(count($errors)>0)
+                @foreach($errors->all() as $error)
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" style="text-align: left !important;">
+                    <span class="alert-text">{{$error}}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endforeach
+                @endif
+                <form action="{{url ('/postregister')}}" id="form-register" method="POST">
+                    {{csrf_field()}}
                     <div class="mt-10">
                         <label for="">Email</label>
-                        <input type="text" name="username" placeholder="Masukan Username / Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Masukan Username / Email'" required="" class="single-input">
+                        <input type="text" name="email" placeholder="Masukan Username / Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Masukan Username / Email'" required="" class="single-input">
                     </div>
                     <div class="mt-10">
                         <label for="">Password</label>
                         <input type="password" name="password" placeholder="Masukan Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Masukan Password'" required="" class="single-input">
                     </div>
                     <div class="mt-10">
-                        <button type="submit" class="genric-btn primary btn-block" style="background-color:#8B6843; font-size:16px !important; ">Masuk</button>
+                        <button type="submit" class="genric-btn primary btn-block" style="background-color:#8B6843; font-size:16px !important; ">Daftar</button>
                     </div>
                 </form>
                 <div class="mb-5 mt-3 text-center">

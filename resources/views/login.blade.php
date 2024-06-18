@@ -23,12 +23,22 @@
             <div class="col"></div>
             <div class="col-lg-4">
                 <div class="text-center mb-5"><span class="h2 font-weight-bold" style="color:#8B6843;">My Account</span></div>
-
+                @if(count($errors)>0)
+                @foreach($errors->all() as $error)
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" style="text-align: left !important;">
+                    <span class="alert-text">{{$error}}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endforeach
+                @endif
                 <span class="h4 font-weight-bold">Masuk</span>
-                <form action="#" id="form-login">
+                <form action="{{url ('/postlogin')}}" id="form-login" method="POST">
+                    {{csrf_field()}}
                     <div class="mt-10">
                         <label for="">Email</label>
-                        <input type="text" name="username" placeholder="Masukan Username / Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Masukan Username / Email'" required="" class="single-input">
+                        <input type="text" name="email" placeholder="Masukan Username / Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Masukan Username / Email'" required="" class="single-input">
                     </div>
                     <div class="mt-10">
                         <label for="">Password</label>

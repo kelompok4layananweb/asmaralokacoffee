@@ -47,7 +47,7 @@
                                         <div class="header-info-right">
                                         <ul>
                                             @if (Auth::check())
-                                            <li><i class="far fa-user"></i> {{auth()->user()->username}} <a href="{{URL::to('/logout')}}" style="font-size: 16pt !important;">Logout</a></li>
+                                            <li><span class="text-white" style="font-size: 16pt !important;"><i class="far fa-user"></i> {{auth()->user()->username}} | </span> <a href="{{URL::to('/logout')}}" style="font-size: 16pt !important;">Logout</a></li>
                                             @else
                                             <li><a href="{{URL::to('/login')}}" style="font-size: 16pt !important;"><i class="far fa-user"></i> My Account </a></li>
                                             @endif
@@ -147,7 +147,7 @@
                                         <input type="text" class="form-control form-control-sm w-100" id="custname" name="custname" placeholder="Nama Lengkap" required autocomplete="off">
                                     </div>
                                     <div class="col-lg-12 form-group m-1">
-                                        <input type="text" class="form-control form-control-sm w-100" id="custemail" name="custemail" placeholder="Email" required autocomplete="off">
+                                        <input type="text" class="form-control form-control-sm w-100" id="custemail" name="custemail" placeholder="Email" required autocomplete="off" value="{{(Auth::check()) ? auth()->user()->email : ''}}">
                                     </div>
                                     <div class="col-lg-12 form-group m-1">
                                         <input type="text" class="form-control form-control-sm w-100" id="custphone" name="custphone" placeholder="No. Telepon" required autocomplete="off">
@@ -181,7 +181,7 @@
                                 <label for="paymenttotal">Total</label>
                                 <input type="text" class="form-control" id="total" name="total" placeholder="0" value="Rp." required readonly>
                                 @if (Auth::check())
-                                    <input type="hidden" class="form-control" id="customer" name="customer" value="{{auth()->user()->username}}->username}}">
+                                    <input type="hidden" class="form-control" id="customer" name="customer" value="{{auth()->user()->username}}">
                                 @endif
                             </div>
                             <div class="col-lg-12 form-group m-1">
