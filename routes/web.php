@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\loginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomerController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +40,15 @@ Route::get('/register', function () {
 Route::post('/postlogin',[AuthController::class,'postlogin'])->middleware('guest');
 Route::post('/postregister',[AuthController::class,'register'])->middleware('guest');
 Route::get('/logout',[AuthController::class,'logout']);
+
+
+
+Route::get('home', function () {
+    return view('home');
+});
+
+Route::get('/login', [loginController::class,'index'])->name('login');
+Route::post('/log', [loginController::class, 'login'])->name('login.store');
+
+Route::resource('customers', CustomerController::class);
+Route::resource('customers.create', CustomerController::class);
